@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fintech_ui/l10n/generated/app_localizations.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../../models/card_model.dart';
+import '../../../providers/app_providers.dart';
 
 /// A horizontal page slider displaying credit cards with selection animation.
-class CardSlider extends StatefulWidget {
+class CardSlider extends ConsumerStatefulWidget {
   final ValueChanged<int> onPageChanged;
 
   const CardSlider({
@@ -13,33 +16,12 @@ class CardSlider extends StatefulWidget {
   });
 
   @override
-  State<CardSlider> createState() => _CardSliderState();
+  ConsumerState<CardSlider> createState() => _CardSliderState();
 }
 
-class _CardSliderState extends State<CardSlider> {
+class _CardSliderState extends ConsumerState<CardSlider> {
   int _currentIndex = 1;
   late final PageController _pageController;
-
-  final List<Map<String, String>> _cards = [
-    {
-      'number': '•••• •••• •••• 1124',
-      'holder': 'Tayyab Sohail',
-      'valid': '04 / 09 / 2027',
-      'cvv': '342',
-    },
-    {
-      'number': '•••• •••• •••• 3466',
-      'holder': 'Tayyab Sohail',
-      'valid': '12 / 02 / 2024',
-      'cvv': '663',
-    },
-    {
-      'number': '•••• •••• •••• 8851',
-      'holder': 'Tayyab Sohail',
-      'valid': '08 / 11 / 2029',
-      'cvv': '904',
-    },
-  ];
 
   @override
   void initState() {
@@ -58,32 +40,68 @@ class _CardSliderState extends State<CardSlider> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 220,
-      child: PageView.builder(
-        controller: _pageController,
-        itemCount: _cards.length,
-        onPageChanged: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-          widget.onPageChanged(index);
-        },
-        physics: const BouncingScrollPhysics(),
-        itemBuilder: (context, index) {
-          final isSelected = index == _currentIndex;
-          return AnimatedScale(
-            scale: isSelected ? 1.0 : 0.88,
-            duration: AppDurations.fast,
-            curve: Curves.easeOut,
-            child: _buildCreditCard(_cards[index]),
+    final cardsAsync = ref.watch(cardsStreamProvider);
+
+    return cardsAsync.when(
+      data: (cards) {
+        if (cards.isEmpty) {
+          return SizedBox(
+            height: 220,
+            child: Center(
+              child: Text(
+                AppLocalizations.of(context)!.noTransactions,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: AppColors.textSecondary.withValues(alpha: 0.5),
+                    ),
+              ),
+            ),
           );
-        },
+        }
+        return SizedBox(
+          height: 220,
+          child: PageView.builder(
+            controller: _pageController,
+            itemCount: cards.length,
+            onPageChanged: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+              widget.onPageChanged(index);
+            },
+            physics: const BouncingScrollPhysics(),
+            itemBuilder: (context, index) {
+              final isSelected = index == _currentIndex;
+              return AnimatedScale(
+                scale: isSelected ? 1.0 : 0.88,
+                duration: AppDurations.fast,
+                curve: Curves.easeOut,
+                child: _buildCreditCard(cards[index]),
+              );
+            },
+          ),
+        );
+      },
+      loading: () => const SizedBox(
+        height: 220,
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
+      error: (error, stackTrace) => SizedBox(
+        height: 220,
+        child: Center(
+          child: Text(
+            'Error loading cards',
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.error,
+                ),
+          ),
+        ),
       ),
     );
   }
 
-  Widget _buildCreditCard(Map<String, String> cardData) {
+  Widget _buildCreditCard(CardModel card) {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -148,7 +166,7 @@ class _CardSliderState extends State<CardSlider> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: Text(
-              cardData['number']!,
+              card.number,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                     fontSize: 18,
                     letterSpacing: 2.0,
@@ -156,74 +174,74 @@ class _CardSliderState extends State<CardSlider> {
                   ),
             ),
           ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.cardHolder,
-                      style: TextStyle(
-                        fontSize: 9,
-                        color: AppColors.textSecondary.withValues(alpha: 0.4),
-                      ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.cardHolder,
+                    style: TextStyle(
+                      fontSize: 9,
+                      color: AppColors.textSecondary.withValues(alpha: 0.4),
                     ),
-                    const SizedBox(height: 2),
-                    Text(
-                      cardData['holder']!,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.textPrimary,
-                          ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    card.holder,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.textPrimary,
+                        ),
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.validThru,
+                    style: TextStyle(
+                      fontSize: 9,
+                      color: AppColors.textSecondary.withValues(alpha: 0.4),
                     ),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.validThru,
-                      style: TextStyle(
-                        fontSize: 9,
-                        color: AppColors.textSecondary.withValues(alpha: 0.4),
-                      ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    card.valid,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.textPrimary,
+                        ),
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.cvv,
+                    style: TextStyle(
+                      fontSize: 9,
+                      color: AppColors.textSecondary.withValues(alpha: 0.4),
                     ),
-                    const SizedBox(height: 2),
-                    Text(
-                      cardData['valid']!,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.textPrimary,
-                          ),
-                    ),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.cvv,
-                      style: TextStyle(
-                        fontSize: 9,
-                        color: AppColors.textSecondary.withValues(alpha: 0.4),
-                      ),
-                    ),
-                    const SizedBox(height: 2),
-                    Text(
-                      cardData['cvv']!,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.textPrimary,
-                          ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    card.cvv,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.textPrimary,
+                        ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ],
       ),
     );

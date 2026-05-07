@@ -5,7 +5,6 @@ import '../../../core/constants/app_colors.dart';
 import '../../../providers/app_providers.dart';
 import '../../../viewmodels/dashboard_viewmodel.dart';
 import '../../../shared/widgets/transaction_item.dart';
-import '../../activity/views/activity_screen.dart';
 
 class TransactionList extends ConsumerWidget {
   const TransactionList({super.key});

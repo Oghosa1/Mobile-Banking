@@ -1,25 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:fintech_ui/l10n/generated/app_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/constants/app_colors.dart';
 import 'profile_header.dart';
-import 'settings_item.dart';
+import 'profile_settings_list.dart';
 import 'logout_button.dart';
 
 /// A slide-out drawer displaying profile information and quick settings.
-class ProfileDrawer extends StatefulWidget {
+class ProfileDrawer extends ConsumerWidget {
   const ProfileDrawer({super.key});
 
   @override
-  State<ProfileDrawer> createState() => _ProfileDrawerState();
-}
-
-class _ProfileDrawerState extends State<ProfileDrawer> {
-  bool _notificationToggle = true;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-
+  Widget build(BuildContext context, WidgetRef ref) {
     return Drawer(
       width: 320,
       backgroundColor: AppColors.background,
@@ -42,92 +33,9 @@ class _ProfileDrawerState extends State<ProfileDrawer> {
                   color: AppColors.divider,
                 ),
                 const SizedBox(height: 24),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        l10n.profileSettings,
-                        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                              fontSize: 18,
-                            ),
-                      ),
-                      const SizedBox(height: 12),
-                      SettingsItem(
-                        icon: Icons.description,
-                        title: l10n.eStatement,
-                        iconBorder: false,
-                      ),
-                      const SizedBox(height: 12),
-                      SettingsItem(
-                        icon: Icons.credit_card,
-                        title: l10n.creditCard,
-                        iconBorder: false,
-                      ),
-                      const SizedBox(height: 12),
-                      SettingsItem(
-                        icon: Icons.settings,
-                        title: l10n.settings,
-                        iconBorder: false,
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 24),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        l10n.notification,
-                        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                              fontSize: 18,
-                            ),
-                      ),
-                      const SizedBox(height: 12),
-                      SettingsItem(
-                        icon: Icons.notifications,
-                        title: l10n.appNotification,
-                        hasToggle: true,
-                        isToggleOn: _notificationToggle,
-                        iconBorder: false,
-                        onToggleChanged: (value) {
-                          setState(() {
-                            _notificationToggle = value;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 24),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        l10n.more,
-                        style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                              fontSize: 18,
-                            ),
-                      ),
-                      const SizedBox(height: 12),
-                      SettingsItem(
-                        icon: Icons.language,
-                        title: l10n.language,
-                        iconBorder: false,
-                      ),
-                      const SizedBox(height: 12),
-                      SettingsItem(
-                        icon: Icons.public,
-                        title: l10n.country,
-                        iconBorder: false,
-                      ),
-                    ],
-                  ),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: ProfileSettingsList(),
                 ),
                 const SizedBox(height: 28),
                 const Padding(

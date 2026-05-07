@@ -13,10 +13,7 @@ class ProfileHeader extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          l10n.profile,
-          style: Theme.of(context).textTheme.headlineLarge,
-        ),
+        Text(l10n.profile, style: Theme.of(context).textTheme.headlineLarge),
         const SizedBox(height: 14),
         Row(
           children: [
@@ -26,15 +23,10 @@ class ProfileHeader extends StatelessWidget {
               decoration: BoxDecoration(
                 color: AppColors.surface,
                 shape: BoxShape.circle,
-                border: Border.all(
-                  color: AppColors.textSecondary,
-                  width: 1,
+                border: Border.all(color: AppColors.textSecondary, width: 1),
+                image: const DecorationImage(
+                  image: AssetImage('assets/images/avatar_1.png'),
                 ),
-              ),
-              child: const Icon(
-                Icons.person,
-                color: AppColors.textSecondary,
-                size: 28,
               ),
             ),
             const SizedBox(width: 11),

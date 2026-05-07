@@ -1,35 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/constants/app_colors.dart';
 import '../../features/dashboard/views/dashboard_screen.dart';
 import '../../features/activity/views/activity_screen.dart';
 import '../../features/cards/views/cards_screen.dart';
 import '../../features/profile/views/profile_screen.dart';
+import '../../viewmodels/navigation_viewmodel.dart';
 
 /// The main navigation scaffold with a bottom navigation bar.
-class AppBottomNav extends StatefulWidget {
+class AppBottomNav extends ConsumerWidget {
   const AppBottomNav({super.key});
 
-  @override
-  State<AppBottomNav> createState() => _AppBottomNavState();
-}
-
-class _AppBottomNavState extends State<AppBottomNav> {
-  int _currentIndex = 0;
-
-  final List<Widget> _screens = [
-    const DashboardScreen(),
-    const ActivityScreen(),
-    const CardsScreen(),
-    const ProfileScreen(),
+  static const List<Widget> _screens = [
+    DashboardScreen(),
+    ActivityScreen(),
+    CardsScreen(),
+    ProfileScreen(),
   ];
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentIndex = ref.watch(navigationViewModelProvider);
+
     return Scaffold(
       backgroundColor: AppColors.background,
-      //  body: _screens[_currentIndex] using this approach is less efficient and will destroy widgets when navigating and resets position of the screen everytime you navigate.
       body: IndexedStack(
-        index: _currentIndex,
+        index: currentIndex,
         children: _screens,
       ),
       bottomNavigationBar: Container(
@@ -42,11 +38,9 @@ class _AppBottomNavState extends State<AppBottomNav> {
           ),
         ),
         child: BottomNavigationBar(
-          currentIndex: _currentIndex,
+          currentIndex: currentIndex,
           onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
+            ref.read(navigationViewModelProvider.notifier).setIndex(index);
           },
           backgroundColor: AppColors.background,
           selectedItemColor: AppColors.primary,
@@ -85,3 +79,4 @@ class _AppBottomNavState extends State<AppBottomNav> {
     );
   }
 }
+
