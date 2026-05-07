@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+/// Immutable state for the cards screen.
 class CardsState extends Equatable {
   final String selectedCardType;
   final int currentCardIndex;
@@ -47,6 +48,7 @@ class CardsState extends Equatable {
       ];
 }
 
+/// ViewModel for managing card selection and settings state.
 class CardsViewModel extends AutoDisposeNotifier<CardsState> {
   @override
   CardsState build() {

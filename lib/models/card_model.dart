@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 
+/// An immutable data model representing a payment card.
 class CardModel extends Equatable {
   final String id;
   final String number;

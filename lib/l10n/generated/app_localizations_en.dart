@@ -36,6 +36,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get today => 'Today';
 
   @override
+  String get year => 'Year';
+
+  @override
   String get yourCard => 'Your Card';
 
   @override
@@ -106,4 +109,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get errorLoading => 'Error loading transactions';
+
+  @override
+  String get profile => 'Profile';
+
+  @override
+  String get myActivity => 'My Activity';
+
+  @override
+  String get totalSpending => 'Total Spending';
+
+  @override
+  String get totalSpend => 'Total Spend';
+
+  @override
+  String get recentTransfer => 'Recent Transfer';
+
+  @override
+  String get freezeCard => 'Freeze Card';
+
+  @override
+  String get reveal => 'Reveal';
+
+  @override
+  String get cardHolder => 'Card Holder';
+
+  @override
+  String get validThru => 'Valid';
+
+  @override
+  String get cvv => 'CVV';
+
+  @override
+  String get mastercard => 'mastercard';
 }

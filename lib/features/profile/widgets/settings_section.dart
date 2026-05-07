@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// A titled section container for grouping related settings items.
 class SettingsSection extends StatelessWidget {
   final String title;
   final List<Widget> children;

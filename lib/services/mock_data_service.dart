@@ -1,6 +1,7 @@
 import '../models/card_model.dart';
 import '../models/transaction_model.dart';
 
+/// A mock data service that provides simulated streams for testing and development.
 class MockDataService {
   Stream<String> get userNameStream {
     return Stream.value('Tayyab Sohail').asBroadcastStream();

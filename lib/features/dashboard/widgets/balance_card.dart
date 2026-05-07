@@ -4,8 +4,6 @@ import 'package:fintech_ui/l10n/generated/app_localizations.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../providers/app_providers.dart';
 
-/// A custom card widget that displays the user's total balance
-/// and provides action buttons to add cash or send money.
 class BalanceCard extends ConsumerWidget {
   const BalanceCard({super.key});
 

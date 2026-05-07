@@ -5,6 +5,7 @@ import '../../../core/constants/app_colors.dart';
 import '../../../viewmodels/cards_viewmodel.dart';
 import '../views/card_transaction_screen.dart';
 
+/// A list of card settings with toggles and navigation options.
 class CardSettingsList extends ConsumerWidget {
   const CardSettingsList({super.key});
 

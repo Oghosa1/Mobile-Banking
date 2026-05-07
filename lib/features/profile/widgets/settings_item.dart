@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../core/constants/app_colors.dart';
 
+/// A reusable settings row with icon, title, and optional toggle or chevron.
 class SettingsItem extends StatelessWidget {
   final IconData icon;
   final String title;

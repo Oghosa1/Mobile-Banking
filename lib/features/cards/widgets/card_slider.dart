@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fintech_ui/l10n/generated/app_localizations.dart';
 import '../../../core/constants/app_colors.dart';
 
+/// A horizontal page slider displaying credit cards with selection animation.
 class CardSlider extends StatefulWidget {
   final ValueChanged<int> onPageChanged;
 
@@ -107,36 +110,11 @@ class _CardSliderState extends State<CardSlider> {
             children: [
               Row(
                 children: [
-                  Container(
+                  Image.asset(
+                    'assets/images/chip.png',
                     width: 36,
                     height: 26,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFFFD700).withValues(alpha: 0.8),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Stack(
-                      children: [
-                        Positioned.fill(
-                          child: GridView.count(
-                            crossAxisCount: 3,
-                            padding: const EdgeInsets.all(2),
-                            physics: const NeverScrollableScrollPhysics(),
-                            children: List.generate(
-                              9,
-                              (index) => Container(
-                                margin: const EdgeInsets.all(0.5),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.black.withValues(alpha: 0.1),
-                                    width: 0.5,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    fit: BoxFit.contain,
                   ),
                   const SizedBox(width: 10),
                   const Icon(
@@ -149,33 +127,15 @@ class _CardSliderState extends State<CardSlider> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        width: 18,
-                        height: 18,
-                        decoration: const BoxDecoration(
-                          color: Color(0xFFFF0015),
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                      Transform.translate(
-                        offset: const Offset(-6, 0),
-                        child: Container(
-                          width: 18,
-                          height: 18,
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFFF9900).withValues(alpha: 0.85),
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                      ),
-                    ],
+                  SvgPicture.asset(
+                    'assets/mastercard.svg',
+                    width: 36,
+                    height: 24,
+                    fit: BoxFit.contain,
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    'mastercard',
+                    AppLocalizations.of(context)!.mastercard,
                     style: TextStyle(
                       fontSize: 6,
                       color: AppColors.textSecondary.withValues(alpha: 0.5),
@@ -196,74 +156,74 @@ class _CardSliderState extends State<CardSlider> {
                   ),
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Card Holder',
-                    style: TextStyle(
-                      fontSize: 9,
-                      color: AppColors.textSecondary.withValues(alpha: 0.4),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.cardHolder,
+                      style: TextStyle(
+                        fontSize: 9,
+                        color: AppColors.textSecondary.withValues(alpha: 0.4),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    cardData['holder']!,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.textPrimary,
-                        ),
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Valid',
-                    style: TextStyle(
-                      fontSize: 9,
-                      color: AppColors.textSecondary.withValues(alpha: 0.4),
+                    const SizedBox(height: 2),
+                    Text(
+                      cardData['holder']!,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.textPrimary,
+                          ),
                     ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    cardData['valid']!,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.textPrimary,
-                        ),
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'CVV',
-                    style: TextStyle(
-                      fontSize: 9,
-                      color: AppColors.textSecondary.withValues(alpha: 0.4),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.validThru,
+                      style: TextStyle(
+                        fontSize: 9,
+                        color: AppColors.textSecondary.withValues(alpha: 0.4),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    cardData['cvv']!,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.textPrimary,
-                        ),
-                  ),
-                ],
-              ),
-            ],
-          ),
+                    const SizedBox(height: 2),
+                    Text(
+                      cardData['valid']!,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.textPrimary,
+                          ),
+                    ),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.cvv,
+                      style: TextStyle(
+                        fontSize: 9,
+                        color: AppColors.textSecondary.withValues(alpha: 0.4),
+                      ),
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      cardData['cvv']!,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.textPrimary,
+                          ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
         ],
       ),
     );

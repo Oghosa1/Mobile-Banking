@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:fintech_ui/l10n/generated/app_localizations.dart';
 import '../../../core/constants/app_colors.dart';
 
+/// A styled button for logging out of the application.
 class LogoutButton extends StatelessWidget {
   const LogoutButton({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Container(
       width: 108,
       height: 40,
@@ -19,7 +23,7 @@ class LogoutButton extends StatelessWidget {
         children: [
           Flexible(
             child: Text(
-              'Logout',
+              l10n.logout,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
                     color: AppColors.error,
                   ),

@@ -112,4 +112,21 @@ void main() {
     expect(find.text('Your Card'), findsOneWidget);
     expect(find.text('Card Settings'), findsOneWidget);
   });
+
+  testWidgets('Tapping Activity tab navigates to Activity screen', (WidgetTester tester) async {
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: testOverrides,
+        child: const FintechApp(),
+      ),
+    );
+
+    // Tap on the Activity navigation tab.
+    await tester.tap(find.byIcon(Icons.bar_chart));
+    await tester.pumpAndSettle();
+
+    // Verify that the Activity Screen is displayed.
+    expect(find.text('My Activity'), findsOneWidget);
+    expect(find.text('Total Spending'), findsOneWidget);
+  });
 }

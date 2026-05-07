@@ -132,7 +132,7 @@ class CardsScreen extends ConsumerWidget {
         ),
         child: Text(
           localizedLabel,
-          style: TextStyle(
+          style: Theme.of(context).textTheme.bodySmall?.copyWith(
             color: isSelected ? AppColors.textPrimary : AppColors.textSecondary.withValues(alpha: 0.4),
             fontWeight: FontWeight.w600,
             fontSize: 12,

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 import '../../features/dashboard/views/dashboard_screen.dart';
+import '../../features/activity/views/activity_screen.dart';
 import '../../features/cards/views/cards_screen.dart';
 import '../../features/profile/views/profile_screen.dart';
 
+/// The main navigation scaffold with a bottom navigation bar.
 class AppBottomNav extends StatefulWidget {
   const AppBottomNav({super.key});
 
@@ -16,6 +18,7 @@ class _AppBottomNavState extends State<AppBottomNav> {
 
   final List<Widget> _screens = [
     const DashboardScreen(),
+    const ActivityScreen(),
     const CardsScreen(),
     const ProfileScreen(),
   ];
@@ -63,6 +66,10 @@ class _AppBottomNavState extends State<AppBottomNav> {
             BottomNavigationBarItem(
               icon: Icon(Icons.home_filled),
               label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.bar_chart),
+              label: 'Activity',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.credit_card),

@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fintech_ui/l10n/generated/app_localizations.dart';
 import '../../../core/constants/app_colors.dart';
-import '../../../models/transaction_model.dart';
 import '../../../providers/app_providers.dart';
 import '../../../viewmodels/dashboard_viewmodel.dart';
+import '../../../shared/widgets/transaction_item.dart';
+import '../../activity/views/activity_screen.dart';
 
-/// A widget that displays a list of the user's recent transaction history
-/// categorized by time frames (Weekly, Monthly, Today).
 class TransactionList extends ConsumerWidget {
   const TransactionList({super.key});
 
@@ -29,14 +28,11 @@ class TransactionList extends ConsumerWidget {
                 context,
               ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.w700),
             ),
-            GestureDetector(
-              onTap: () {},
-              child: Text(
-                l10n.seeAll,
-                style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                  color: AppColors.primary,
-                  fontWeight: FontWeight.w600,
-                ),
+            Text(
+              l10n.seeAll,
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                color: AppColors.primary,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ],
@@ -89,9 +85,7 @@ class TransactionList extends ConsumerWidget {
               );
             }
             return Column(
-              children: filtered
-                  .map((tx) => _buildTransactionItem(context, tx))
-                  .toList(),
+              children: filtered.map((tx) => TransactionItem(tx: tx)).toList(),
             );
           },
           loading: () => const Padding(
@@ -147,75 +141,6 @@ class TransactionList extends ConsumerWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildTransactionItem(BuildContext context, TransactionModel tx) {
-    IconData getIcon(String title) {
-      switch (title) {
-        case 'E wallet':
-          return Icons.account_balance_wallet_outlined;
-        case 'Online Shopping':
-          return Icons.shopping_bag_outlined;
-        case 'Banking Fee':
-          return Icons.account_balance_outlined;
-        case 'Saving':
-          return Icons.savings_outlined;
-        default:
-          return Icons.payment_outlined;
-      }
-    }
-
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
-      child: Row(
-        children: [
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              color: AppColors.surfaceLight,
-              shape: BoxShape.circle,
-              border: Border.all(color: AppColors.surface, width: 2),
-            ),
-            child: Icon(
-              getIcon(tx.title),
-              color: AppColors.textPrimary,
-              size: 20,
-            ),
-          ),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  tx.title,
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.textPrimary,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  tx.subtitle,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: AppColors.textSecondary.withValues(alpha: 0.5),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Text(
-            tx.amount,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-              fontWeight: FontWeight.w700,
-              color: tx.isCredit ? AppColors.primary : AppColors.debitRed,
-            ),
-          ),
-        ],
       ),
     );
   }

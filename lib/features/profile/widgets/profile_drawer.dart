@@ -5,6 +5,7 @@ import 'profile_header.dart';
 import 'settings_item.dart';
 import 'logout_button.dart';
 
+/// A slide-out drawer displaying profile information and quick settings.
 class ProfileDrawer extends StatefulWidget {
   const ProfileDrawer({super.key});
 

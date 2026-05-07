@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fintech_ui/l10n/generated/app_localizations.dart';
 import '../../../models/card_model.dart';
 import '../../../core/constants/app_colors.dart';
 
@@ -41,30 +43,11 @@ class CardTransactionCreditCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Container(
+                   Image.asset(
+                    'assets/images/chip.png',
                     width: 36,
                     height: 26,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFFFD700).withValues(alpha: 0.8),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: GridView.count(
-                      crossAxisCount: 3,
-                      padding: const EdgeInsets.all(2),
-                      physics: const NeverScrollableScrollPhysics(),
-                      children: List.generate(
-                        9,
-                        (index) => Container(
-                          margin: const EdgeInsets.all(0.5),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.black.withValues(alpha: 0.1),
-                              width: 0.5,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
+                    fit: BoxFit.contain,
                   ),
                   const SizedBox(width: 10),
                   const Icon(
@@ -77,33 +60,15 @@ class CardTransactionCreditCard extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        width: 18,
-                        height: 18,
-                        decoration: const BoxDecoration(
-                          color: AppColors.mastercardRed,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                      Transform.translate(
-                        offset: const Offset(-6, 0),
-                        child: Container(
-                          width: 18,
-                          height: 18,
-                          decoration: BoxDecoration(
-                            color: AppColors.mastercardOrange.withValues(alpha: 0.85),
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                      ),
-                    ],
+                  SvgPicture.asset(
+                    'assets/mastercard.svg',
+                    width: 36,
+                    height: 24,
+                    fit: BoxFit.contain,
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    'mastercard',
+                    AppLocalizations.of(context)!.mastercard,
                     style: TextStyle(
                       fontSize: 6,
                       color: AppColors.textSecondary.withValues(alpha: 0.5),
@@ -131,7 +96,7 @@ class CardTransactionCreditCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Card Holder',
+                    AppLocalizations.of(context)!.cardHolder,
                     style: TextStyle(
                       fontSize: 9,
                       color: AppColors.textSecondary.withValues(alpha: 0.4),
@@ -152,7 +117,7 @@ class CardTransactionCreditCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Valid',
+                    AppLocalizations.of(context)!.validThru,
                     style: TextStyle(
                       fontSize: 9,
                       color: AppColors.textSecondary.withValues(alpha: 0.4),
@@ -173,7 +138,7 @@ class CardTransactionCreditCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'CVV',
+                    AppLocalizations.of(context)!.cvv,
                     style: TextStyle(
                       fontSize: 9,
                       color: AppColors.textSecondary.withValues(alpha: 0.4),

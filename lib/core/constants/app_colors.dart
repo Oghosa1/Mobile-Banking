@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Defines the application's color palette.
 class AppColors {
   static const Color background = Color(0xFF1C1C1D);
   static const Color surface = Color(0xFF232325);
@@ -16,6 +17,7 @@ class AppColors {
   static const Color debitRed = Color(0xFFFF3B30);
 }
 
+/// Defines standard spacing values used throughout the application.
 class AppSpacing {
   static const double xs = 4.0;
   static const double sm = 8.0;
@@ -25,6 +27,7 @@ class AppSpacing {
   static const double xxl = 48.0;
 }
 
+/// Defines standard animation durations used throughout the application.
 class AppDurations {
   static const Duration fast = Duration(milliseconds: 150);
   static const Duration standard = Duration(milliseconds: 300);

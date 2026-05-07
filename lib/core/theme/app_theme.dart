@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../constants/app_colors.dart';
 
+/// Provides the application's theme configuration.
 class AppTheme {
   static ThemeData get darkTheme {
     return ThemeData(

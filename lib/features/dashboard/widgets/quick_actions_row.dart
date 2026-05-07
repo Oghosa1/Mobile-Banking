@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:fintech_ui/l10n/generated/app_localizations.dart';
 import '../../../core/constants/app_colors.dart';
 
-/// A row of quick action buttons for daily transactions such as
-/// Bill Pay, Donations, Deposit, and More.
 class QuickActionsRow extends StatelessWidget {
   const QuickActionsRow({super.key});
 

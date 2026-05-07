@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:fintech_ui/l10n/generated/app_localizations.dart';
 import '../../../core/constants/app_colors.dart';
 
+/// A header widget displaying the user's profile picture, name, role, and email.
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Profile',
+          l10n.profile,
           style: Theme.of(context).textTheme.headlineLarge,
         ),
         const SizedBox(height: 14),

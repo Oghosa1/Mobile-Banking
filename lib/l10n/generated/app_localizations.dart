@@ -148,6 +148,12 @@ abstract class AppLocalizations {
   /// **'Today'**
   String get today;
 
+  /// No description provided for @year.
+  ///
+  /// In en, this message translates to:
+  /// **'Year'**
+  String get year;
+
   /// No description provided for @yourCard.
   ///
   /// In en, this message translates to:
@@ -291,6 +297,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Error loading transactions'**
   String get errorLoading;
+
+  /// No description provided for @profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get profile;
+
+  /// No description provided for @myActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'My Activity'**
+  String get myActivity;
+
+  /// No description provided for @totalSpending.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Spending'**
+  String get totalSpending;
+
+  /// No description provided for @totalSpend.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Spend'**
+  String get totalSpend;
+
+  /// No description provided for @recentTransfer.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent Transfer'**
+  String get recentTransfer;
+
+  /// No description provided for @freezeCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Freeze Card'**
+  String get freezeCard;
+
+  /// No description provided for @reveal.
+  ///
+  /// In en, this message translates to:
+  /// **'Reveal'**
+  String get reveal;
+
+  /// No description provided for @cardHolder.
+  ///
+  /// In en, this message translates to:
+  /// **'Card Holder'**
+  String get cardHolder;
+
+  /// No description provided for @validThru.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid'**
+  String get validThru;
+
+  /// No description provided for @cvv.
+  ///
+  /// In en, this message translates to:
+  /// **'CVV'**
+  String get cvv;
+
+  /// No description provided for @mastercard.
+  ///
+  /// In en, this message translates to:
+  /// **'mastercard'**
+  String get mastercard;
 }
 
 class _AppLocalizationsDelegate
