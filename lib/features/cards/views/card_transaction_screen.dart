@@ -10,11 +10,44 @@ import '../widgets/card_transaction_credit_card.dart';
 import '../widgets/card_transaction_history.dart';
 
 /// A premium screen displaying transaction history and spending charts for a specific card.
-class CardTransactionScreen extends ConsumerWidget {
+class CardTransactionScreen extends ConsumerStatefulWidget {
   const CardTransactionScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<CardTransactionScreen> createState() => _CardTransactionScreenState();
+}
+
+class _CardTransactionScreenState extends ConsumerState<CardTransactionScreen> {
+  int _selectedIndex = 2; // Default to Feb (index 2)
+
+  final List<FlSpot> _spots = const [
+    FlSpot(0, 1.2),
+    FlSpot(0.5, 2.2),
+    FlSpot(1, 1.8), // Feb
+    FlSpot(1.5, 2.5),
+    FlSpot(2, 2.1),
+    FlSpot(2.5, 3.2),
+    FlSpot(3, 2.8),
+    FlSpot(3.5, 3.0),
+    FlSpot(4, 2.6),
+    FlSpot(5, 4.0),
+  ];
+
+  final List<int> _spotAmounts = const [
+    1250,
+    2200,
+    3657,
+    2500,
+    2100,
+    3200,
+    2800,
+    3000,
+    2600,
+    4000,
+  ];
+
+  @override
+  Widget build(BuildContext context) {
     final cardsAsync = ref.watch(cardsStreamProvider);
     final cardsState = ref.watch(cardsViewModelProvider);
     final l10n = AppLocalizations.of(context)!;
@@ -98,6 +131,9 @@ class CardTransactionScreen extends ConsumerWidget {
   }
 
   Widget _buildTotalSpendSection(BuildContext context) {
+    final amount = _spotAmounts[_selectedIndex];
+    final formattedAmount = '\$${amount.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}';
+
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -125,7 +161,7 @@ class CardTransactionScreen extends ConsumerWidget {
                   ),
                   const SizedBox(width: 8),
                   Text(
-                    '30\$',
+                    formattedAmount,
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                           fontWeight: FontWeight.w700,
                           color: AppColors.textPrimary,
@@ -225,18 +261,7 @@ class CardTransactionScreen extends ConsumerWidget {
                 maxY: 5,
                 lineBarsData: [
                   LineChartBarData(
-                    spots: [
-                      const FlSpot(0, 1.2),
-                      const FlSpot(0.5, 2.2),
-                      const FlSpot(1, 1.8), // Feb
-                      const FlSpot(1.5, 2.5),
-                      const FlSpot(2, 2.1),
-                      const FlSpot(2.5, 3.2),
-                      const FlSpot(3, 2.8),
-                      const FlSpot(3.5, 3.0),
-                      const FlSpot(4, 2.6),
-                      const FlSpot(5, 4.0),
-                    ],
+                    spots: _spots,
                     isCurved: true,
                     color: AppColors.primary,
                     barWidth: 3,
@@ -244,7 +269,7 @@ class CardTransactionScreen extends ConsumerWidget {
                     dotData: FlDotData(
                       show: true,
                       getDotPainter: (spot, percent, barData, index) {
-                        if (spot.x == 1) {
+                        if (index == _selectedIndex) {
                           return FlDotCirclePainter(
                             radius: 6,
                             color: AppColors.primary,
@@ -271,16 +296,27 @@ class CardTransactionScreen extends ConsumerWidget {
                 showingTooltipIndicators: [
                   ShowingTooltipIndicators([
                     LineBarSpot(
-                      LineChartBarData(spots: [
-                        const FlSpot(1, 1.8),
-                      ]),
+                      LineChartBarData(spots: _spots),
                       0,
-                      const FlSpot(1, 1.8),
+                      _spots[_selectedIndex],
                     ),
                   ]),
                 ],
                 lineTouchData: LineTouchData(
-                  enabled: false,
+                  enabled: true,
+                  handleBuiltInTouches: true,
+                  touchCallback: (FlTouchEvent event, LineTouchResponse? touchResponse) {
+                    if (touchResponse != null &&
+                        touchResponse.lineBarSpots != null &&
+                        touchResponse.lineBarSpots!.isNotEmpty) {
+                      final index = touchResponse.lineBarSpots!.first.spotIndex;
+                      if (index != _selectedIndex) {
+                        setState(() {
+                          _selectedIndex = index;
+                        });
+                      }
+                    }
+                  },
                   getTouchedSpotIndicator: (LineChartBarData barData, List<int> spotIndexes) {
                     return spotIndexes.map((spotIndex) {
                       return TouchedSpotIndicatorData(
@@ -299,8 +335,10 @@ class CardTransactionScreen extends ConsumerWidget {
                     tooltipMargin: 8,
                     getTooltipItems: (List<LineBarSpot> touchedBarSpots) {
                       return touchedBarSpots.map((barSpot) {
+                        final amount = _spotAmounts[barSpot.spotIndex];
+                        final formatted = '\$${amount.toString().replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}';
                         return LineTooltipItem(
-                          '\$3,657',
+                          formatted,
                           const TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,

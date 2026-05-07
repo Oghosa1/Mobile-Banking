@@ -80,7 +80,7 @@ void main() {
     expect(find.byType(CardTransactionScreen), findsOneWidget);
     expect(find.text('Card Transactions'), findsOneWidget);
     expect(find.text('Total Spend'), findsOneWidget);
-    expect(find.text('30\$'), findsOneWidget);
+    expect(find.text('\$3,657'), findsOneWidget);
     expect(find.text('E wallet'), findsOneWidget);
     expect(find.text('Online Shopping'), findsOneWidget);
   });
