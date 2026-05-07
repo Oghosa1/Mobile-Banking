@@ -11,11 +11,10 @@
 .svn/
 .swiftpm/
 *.json
-*.md
 *.py
 *.sh
 migrate_working_dir/
-rules.md
+
 
 # IntelliJ related
 *.iml
