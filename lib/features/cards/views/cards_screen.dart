@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fintech_ui/l10n/generated/app_localizations.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../../providers/app_providers.dart';
 import '../../../viewmodels/cards_viewmodel.dart';
 import '../widgets/card_slider.dart';
 import '../widgets/card_actions.dart';
@@ -13,7 +14,13 @@ class CardsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cardsState = ref.watch(cardsViewModelProvider);
+    final cardsAsync = ref.watch(cardsStreamProvider);
     final l10n = AppLocalizations.of(context)!;
+
+    final cards = cardsAsync.value ?? [];
+    final physicalCount = cards.where((c) => c.cardType == 'Physical Card').length;
+    final virtualCount = cards.where((c) => c.cardType == 'Virtual Card').length;
+    final cardCountText = '$physicalCount ${l10n.physicalCard}, $virtualCount ${l10n.virtualCard}';
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -49,7 +56,7 @@ class CardsScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '2 Physical Card, 1 Virtual Card',
+                  cardCountText,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                         fontSize: 12,
                         color: AppColors.textSecondary.withValues(alpha: 0.5),

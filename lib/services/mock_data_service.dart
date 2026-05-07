@@ -15,7 +15,7 @@ class MockDataService {
 
   Stream<List<TransactionModel>> get transactionStream {
     return Stream.periodic(
-      const Duration(seconds: 12),
+      const Duration(seconds: 3),
       (count) {
         final List<TransactionModel> list = [
           const TransactionModel(

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fintech_ui/l10n/generated/app_localizations.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../viewmodels/cards_viewmodel.dart';
+import '../views/card_transaction_screen.dart';
 
 class CardSettingsList extends ConsumerWidget {
   const CardSettingsList({super.key});
@@ -58,6 +59,14 @@ class CardSettingsList extends ConsumerWidget {
           icon: Icons.credit_card,
           title: l10n.cardTransactions,
           hasToggle: false,
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const CardTransactionScreen(),
+              ),
+            );
+          },
         ),
         _buildSettingItem(
           context,
@@ -80,53 +89,57 @@ class CardSettingsList extends ConsumerWidget {
     required bool hasToggle,
     bool toggleValue = false,
     ValueChanged<bool>? onToggleChanged,
+    VoidCallback? onTap,
   }) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 12),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      decoration: BoxDecoration(
-        color: AppColors.surface,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Colors.white.withValues(alpha: 0.05),
-          width: 1,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: Colors.white.withValues(alpha: 0.05),
+            width: 1,
+          ),
         ),
-      ),
-      child: Row(
-        children: [
-          Icon(
-            icon,
-            color: AppColors.textPrimary,
-            size: 22,
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Text(
-              title,
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.textPrimary,
-                  ),
-            ),
-          ),
-          if (hasToggle)
-            Switch(
-              value: toggleValue,
-              onChanged: onToggleChanged,
-              activeTrackColor: AppColors.primary,
-              activeThumbColor: Colors.white,
-              inactiveTrackColor: AppColors.surfaceLight,
-              inactiveThumbColor: AppColors.textSecondary.withValues(alpha: 0.3),
-              trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
-            )
-          else
-            const Icon(
-              Icons.chevron_right,
+        child: Row(
+          children: [
+            Icon(
+              icon,
               color: AppColors.textPrimary,
-              size: 20,
+              size: 22,
             ),
-        ],
+            const SizedBox(width: 16),
+            Expanded(
+              child: Text(
+                title,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textPrimary,
+                    ),
+              ),
+            ),
+            if (hasToggle)
+              Switch(
+                value: toggleValue,
+                onChanged: onToggleChanged,
+                activeTrackColor: AppColors.primary,
+                activeThumbColor: Colors.white,
+                inactiveTrackColor: AppColors.surfaceLight,
+                inactiveThumbColor: AppColors.textSecondary.withValues(alpha: 0.3),
+                trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
+              )
+            else
+              const Icon(
+                Icons.chevron_right,
+                color: AppColors.textPrimary,
+                size: 20,
+              ),
+          ],
+        ),
       ),
     );
   }
