@@ -6,7 +6,7 @@ A dark-themed fintech mobile UI built as a Flutter technical assessment for Mint
 
 The architecture is designed so that the mock data layer can be swapped for a real API without modifying any presentation-layer code.
 
-![App Demo](assets/demo.gif)
+<img src="assets/demo.gif" width="300" alt="App Demo"/>
 
 ---
 
