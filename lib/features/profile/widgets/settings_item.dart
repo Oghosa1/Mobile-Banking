@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../../../core/constants/app_colors.dart';
 
 /// A reusable settings row with icon, title, and optional toggle or chevron.
 class SettingsItem extends StatelessWidget {
-  final IconData icon;
+  final IconData? icon;
+  final String? svgPath;
   final String title;
   final bool hasToggle;
   final bool isToggleOn;
@@ -13,7 +15,8 @@ class SettingsItem extends StatelessWidget {
 
   const SettingsItem({
     super.key,
-    required this.icon,
+    this.icon,
+    this.svgPath,
     required this.title,
     this.hasToggle = false,
     this.isToggleOn = false,
@@ -53,11 +56,19 @@ class SettingsItem extends StatelessWidget {
                           )
                         : null,
                   ),
-                  child: Icon(
-                    icon,
-                    color: AppColors.primary,
-                    size: iconBorder ? 18 : 24,
-                  ),
+                  child: svgPath != null
+                      ? SvgPicture.asset(
+                          svgPath!,
+                          width: iconBorder ? 18 : 24,
+                          height: iconBorder ? 18 : 24,
+                        )
+                      : icon != null
+                          ? Icon(
+                              icon,
+                              color: AppColors.primary,
+                              size: iconBorder ? 18 : 24,
+                            )
+                          : const SizedBox.shrink(),
                 ),
               ),
             ),
@@ -75,7 +86,7 @@ class SettingsItem extends StatelessWidget {
                   value: isToggleOn,
                   onChanged: onToggleChanged,
                   activeThumbColor: Colors.white,
-                  activeTrackColor: AppColors.primaryDark,
+                  // activeTrackColor: AppColors.primaryDark,
                   inactiveTrackColor: AppColors.surfaceLight,
                 ),
               )

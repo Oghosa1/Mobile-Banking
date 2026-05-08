@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fintech_ui/l10n/generated/app_localizations.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../../core/constants/assets.dart';
 import '../../../viewmodels/cards_viewmodel.dart';
 import '../views/card_transaction_screen.dart';
 
@@ -19,15 +22,16 @@ class CardSettingsList extends ConsumerWidget {
       children: [
         Text(
           l10n.cardSettings,
-          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.w700,
-                fontSize: 22,
-              ),
+          style: GoogleFonts.arimo(
+            textStyle: Theme.of(context).textTheme.headlineMedium,
+            fontWeight: FontWeight.normal,
+            fontSize: 22,
+          ),
         ),
         const SizedBox(height: 16),
         _buildSettingItem(
           context,
-          icon: Icons.password,
+          svgPath: Assets.assetsSvgsChangePin,
           title: l10n.changePin,
           hasToggle: true,
           toggleValue: cardsState.changePin,
@@ -37,7 +41,7 @@ class CardSettingsList extends ConsumerWidget {
         ),
         _buildSettingItem(
           context,
-          icon: Icons.qr_code_2,
+          svgPath: Assets.assetsSvgsQrPayment,
           title: l10n.qrPayment,
           hasToggle: true,
           toggleValue: cardsState.qrPayment,
@@ -47,7 +51,7 @@ class CardSettingsList extends ConsumerWidget {
         ),
         _buildSettingItem(
           context,
-          icon: Icons.store_outlined,
+          svgPath: Assets.assetsSvgsOnlineShopping,
           title: l10n.onlineShopping,
           hasToggle: true,
           toggleValue: cardsState.onlineShopping,
@@ -57,7 +61,7 @@ class CardSettingsList extends ConsumerWidget {
         ),
         _buildSettingItem(
           context,
-          icon: Icons.credit_card,
+          svgPath: Assets.assetsSvgsCardTransactions,
           title: l10n.cardTransactions,
           hasToggle: false,
           onTap: () {
@@ -71,7 +75,7 @@ class CardSettingsList extends ConsumerWidget {
         ),
         _buildSettingItem(
           context,
-          icon: Icons.contactless_outlined,
+          svgPath: Assets.assetsSvgsContactless,
           title: l10n.tapPay,
           hasToggle: true,
           toggleValue: cardsState.tapPay,
@@ -85,7 +89,8 @@ class CardSettingsList extends ConsumerWidget {
 
   Widget _buildSettingItem(
     BuildContext context, {
-    required IconData icon,
+    IconData? icon,
+    String? svgPath,
     required String title,
     required bool hasToggle,
     bool toggleValue = false,
@@ -95,8 +100,9 @@ class CardSettingsList extends ConsumerWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        height: 60,
         margin: const EdgeInsets.only(bottom: 12),
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         decoration: BoxDecoration(
           color: AppColors.surface,
           borderRadius: BorderRadius.circular(12),
@@ -107,20 +113,28 @@ class CardSettingsList extends ConsumerWidget {
         ),
         child: Row(
           children: [
-            Icon(
-              icon,
-              color: AppColors.textPrimary,
-              size: 22,
-            ),
+            if (svgPath != null)
+              SvgPicture.asset(
+                svgPath,
+                width: 22,
+                height: 30,
+                colorFilter: const ColorFilter.mode(
+                  AppColors.textPrimary,
+                  BlendMode.srcIn,
+                ),
+              )
+            else if (icon != null)
+              Icon(icon, color: AppColors.textPrimary, size: 22),
             const SizedBox(width: 16),
             Expanded(
               child: Text(
                 title,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.textPrimary,
-                    ),
+                style: GoogleFonts.arimo(
+                  textStyle: Theme.of(context).textTheme.headlineMedium,
+                  fontSize: 20,
+                  fontWeight: FontWeight.normal,
+                  color: AppColors.textPrimary,
+                ),
               ),
             ),
             if (hasToggle)
@@ -130,7 +144,9 @@ class CardSettingsList extends ConsumerWidget {
                 activeTrackColor: AppColors.primary,
                 activeThumbColor: Colors.white,
                 inactiveTrackColor: AppColors.surfaceLight,
-                inactiveThumbColor: AppColors.textSecondary.withValues(alpha: 0.3),
+                inactiveThumbColor: AppColors.textSecondary.withValues(
+                  alpha: 0.3,
+                ),
                 trackOutlineColor: WidgetStateProperty.all(Colors.transparent),
               )
             else

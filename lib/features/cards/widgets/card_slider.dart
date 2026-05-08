@@ -6,6 +6,8 @@ import '../../../core/constants/app_colors.dart';
 import '../../../models/card_model.dart';
 import '../../../providers/app_providers.dart';
 
+import '../../../core/constants/assets.dart';
+
 /// A horizontal page slider displaying credit cards with selection animation.
 class CardSlider extends ConsumerStatefulWidget {
   final ValueChanged<int> onPageChanged;
@@ -111,6 +113,10 @@ class _CardSliderState extends ConsumerState<CardSlider> {
           color: Colors.white.withValues(alpha: 0.05),
           width: 1,
         ),
+        image: const DecorationImage(
+          image: AssetImage(Assets.assetsImagesCardBackground),
+          fit: BoxFit.cover,
+        ),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.15),
@@ -128,17 +134,17 @@ class _CardSliderState extends ConsumerState<CardSlider> {
             children: [
               Row(
                 children: [
-                  Image.asset(
-                    'assets/images/chip.png',
+                  SvgPicture.asset(
+                    Assets.assetsSvgsChip,
                     width: 36,
                     height: 26,
                     fit: BoxFit.contain,
                   ),
                   const SizedBox(width: 10),
-                  const Icon(
-                    Icons.contactless,
-                    color: Colors.white,
-                    size: 20,
+                  SvgPicture.asset(
+                    Assets.assetsSvgsContactless,
+                    width: 20,
+                    height: 20,
                   ),
                 ],
               ),
@@ -146,7 +152,7 @@ class _CardSliderState extends ConsumerState<CardSlider> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   SvgPicture.asset(
-                    'assets/mastercard.svg',
+                    Assets.assetsSvgsMastercard,
                     width: 36,
                     height: 24,
                     fit: BoxFit.contain,

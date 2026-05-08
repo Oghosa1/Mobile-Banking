@@ -29,4 +29,9 @@ flutter:
   generate: true
   assets:
     - assets/images/
-    - assets/mastercard.svg
+    - assets/svgs/
+
+flutter_assets:
+  assets_path: assets/
+  output_path: lib/core/constants/
+  filename: assets.dart

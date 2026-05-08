@@ -3,15 +3,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fintech_ui/l10n/generated/app_localizations.dart';
 import '../../../models/card_model.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../../core/constants/assets.dart';
 
 /// A custom credit card widget used specifically on the transaction details screen.
 class CardTransactionCreditCard extends StatelessWidget {
   final CardModel card;
 
-  const CardTransactionCreditCard({
-    super.key,
-    required this.card,
-  });
+  const CardTransactionCreditCard({super.key, required this.card});
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +23,10 @@ class CardTransactionCreditCard extends StatelessWidget {
         border: Border.all(
           color: Colors.white.withValues(alpha: 0.05),
           width: 1,
+        ),
+        image: const DecorationImage(
+          image: AssetImage(Assets.assetsImagesCardBackground),
+          fit: BoxFit.cover,
         ),
         boxShadow: [
           BoxShadow(
@@ -43,17 +45,17 @@ class CardTransactionCreditCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                   Image.asset(
-                    'assets/images/chip.png',
-                    width: 36,
-                    height: 26,
+                  SvgPicture.asset(
+                    Assets.assetsSvgsChip,
+                    width: 48,
+                    height: 51,
                     fit: BoxFit.contain,
                   ),
                   const SizedBox(width: 10),
-                  const Icon(
-                    Icons.contactless,
-                    color: Colors.white,
-                    size: 20,
+                  SvgPicture.asset(
+                    Assets.assetsSvgsContactless,
+                    width: 20,
+                    height: 20,
                   ),
                 ],
               ),
@@ -61,7 +63,7 @@ class CardTransactionCreditCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   SvgPicture.asset(
-                    'assets/mastercard.svg',
+                    Assets.assetsSvgsMastercard,
                     width: 36,
                     height: 24,
                     fit: BoxFit.contain,
@@ -83,10 +85,10 @@ class CardTransactionCreditCard extends StatelessWidget {
             child: Text(
               card.number,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    fontSize: 18,
-                    letterSpacing: 2.0,
-                    fontWeight: FontWeight.w700,
-                  ),
+                fontSize: 18,
+                letterSpacing: 2.0,
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
           Row(
@@ -106,10 +108,10 @@ class CardTransactionCreditCard extends StatelessWidget {
                   Text(
                     card.holder,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.textPrimary,
-                        ),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textPrimary,
+                    ),
                   ),
                 ],
               ),
@@ -127,10 +129,10 @@ class CardTransactionCreditCard extends StatelessWidget {
                   Text(
                     card.valid,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.textPrimary,
-                        ),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textPrimary,
+                    ),
                   ),
                 ],
               ),
@@ -148,10 +150,10 @@ class CardTransactionCreditCard extends StatelessWidget {
                   Text(
                     card.cvv,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.textPrimary,
-                        ),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textPrimary,
+                    ),
                   ),
                 ],
               ),

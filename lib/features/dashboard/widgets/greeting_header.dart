@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fintech_ui/l10n/generated/app_localizations.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../../core/constants/assets.dart';
 import '../../../providers/app_providers.dart';
 
 class GreetingHeader extends ConsumerWidget {
@@ -54,10 +56,14 @@ class GreetingHeader extends ConsumerWidget {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              const Icon(
-                Icons.notifications_none,
-                color: AppColors.textPrimary,
-                size: 22,
+              SvgPicture.asset(
+                Assets.assetsSvgsBellNotification,
+                width: 22,
+                height: 22,
+                colorFilter: const ColorFilter.mode(
+                  AppColors.textPrimary,
+                  BlendMode.srcIn,
+                ),
               ),
               Positioned(
                 top: 10,

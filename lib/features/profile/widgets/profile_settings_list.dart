@@ -1,3 +1,4 @@
+import 'package:fintech_ui/core/constants/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fintech_ui/l10n/generated/app_localizations.dart';
@@ -46,7 +47,7 @@ class ProfileSettingsList extends ConsumerWidget {
           title: l10n.notification,
           children: [
             SettingsItem(
-              icon: Icons.notifications,
+              svgPath: Assets.assetsSvgsBellNotification,
               title: l10n.appNotification,
               hasToggle: true,
               isToggleOn: isNotificationsEnabled,
@@ -64,13 +65,13 @@ class ProfileSettingsList extends ConsumerWidget {
           title: l10n.more,
           children: [
             SettingsItem(
-              icon: Icons.translate,
+              svgPath: Assets.assetsSvgsLanguage,
               title: l10n.language,
               iconBorder: false,
             ),
             const SizedBox(height: 12),
             SettingsItem(
-              icon: Icons.public,
+              svgPath: Assets.assetsSvgsCountry,
               title: l10n.country,
               iconBorder: false,
             ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fintech_ui/l10n/generated/app_localizations.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../../core/constants/assets.dart';
 
 class QuickActionsRow extends StatelessWidget {
   const QuickActionsRow({super.key});
@@ -25,7 +27,7 @@ class QuickActionsRow extends StatelessWidget {
           Expanded(
             child: _buildActionItem(
               context,
-              icon: Icons.phone_iphone,
+              svgPath: Assets.assetsSvgsBill,
               label: l10n.billPay,
             ),
           ),
@@ -33,7 +35,7 @@ class QuickActionsRow extends StatelessWidget {
           Expanded(
             child: _buildActionItem(
               context,
-              icon: Icons.volunteer_activism,
+              svgPath: Assets.assetsSvgsDonation,
               label: l10n.donations,
             ),
           ),
@@ -41,7 +43,7 @@ class QuickActionsRow extends StatelessWidget {
           Expanded(
             child: _buildActionItem(
               context,
-              icon: Icons.savings,
+              svgPath: Assets.assetsSvgsDeposit,
               label: l10n.deposit,
             ),
           ),
@@ -49,7 +51,7 @@ class QuickActionsRow extends StatelessWidget {
           Expanded(
             child: _buildActionItem(
               context,
-              icon: Icons.grid_view,
+              svgPath: Assets.assetsSvgsMore,
               label: l10n.more,
             ),
           ),
@@ -58,7 +60,7 @@ class QuickActionsRow extends StatelessWidget {
     );
   }
 
-  Widget _buildActionItem(BuildContext context, {required IconData icon, required String label}) {
+  Widget _buildActionItem(BuildContext context, {required String svgPath, required String label}) {
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -67,18 +69,10 @@ class QuickActionsRow extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Container(
+            SvgPicture.asset(
+              svgPath,
               width: 44,
               height: 44,
-              decoration: const BoxDecoration(
-                color: AppColors.surfaceLight,
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                icon,
-                color: AppColors.textPrimary,
-                size: 20,
-              ),
             ),
             const SizedBox(height: 10),
             Text(
