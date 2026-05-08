@@ -14,7 +14,7 @@ class CardTransactionCreditCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200,
+      height: 220,
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
@@ -41,42 +41,29 @@ class CardTransactionCreditCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Row(
-                children: [
-                  SvgPicture.asset(
-                    Assets.assetsSvgsChip,
-                    width: 48,
-                    height: 51,
-                    fit: BoxFit.contain,
-                  ),
-                  const SizedBox(width: 10),
-                  SvgPicture.asset(
-                    Assets.assetsSvgsContactless,
-                    width: 20,
-                    height: 20,
-                  ),
-                ],
+              SvgPicture.asset(
+                Assets.assetsSvgsMastercard,
+                width: 36,
+                height: 24,
+                fit: BoxFit.contain,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  SvgPicture.asset(
-                    Assets.assetsSvgsMastercard,
-                    width: 36,
-                    height: 24,
-                    fit: BoxFit.contain,
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    AppLocalizations.of(context)!.mastercard,
-                    style: TextStyle(
-                      fontSize: 6,
-                      color: AppColors.textSecondary.withValues(alpha: 0.5),
-                    ),
-                  ),
-                ],
+            ],
+          ),
+          Row(
+            children: [
+              SvgPicture.asset(
+                Assets.assetsSvgsChip,
+                width: 36,
+                height: 26,
+                fit: BoxFit.contain,
+              ),
+              const SizedBox(width: 10),
+              SvgPicture.asset(
+                Assets.assetsSvgsContactless,
+                width: 20,
+                height: 20,
               ),
             ],
           ),

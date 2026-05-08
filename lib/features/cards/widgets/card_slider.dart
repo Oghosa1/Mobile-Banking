@@ -130,42 +130,29 @@ class _CardSliderState extends ConsumerState<CardSlider> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Row(
-                children: [
-                  SvgPicture.asset(
-                    Assets.assetsSvgsChip,
-                    width: 36,
-                    height: 26,
-                    fit: BoxFit.contain,
-                  ),
-                  const SizedBox(width: 10),
-                  SvgPicture.asset(
-                    Assets.assetsSvgsContactless,
-                    width: 20,
-                    height: 20,
-                  ),
-                ],
+              SvgPicture.asset(
+                Assets.assetsSvgsMastercard,
+                width: 36,
+                height: 24,
+                fit: BoxFit.contain,
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  SvgPicture.asset(
-                    Assets.assetsSvgsMastercard,
-                    width: 36,
-                    height: 24,
-                    fit: BoxFit.contain,
-                  ),
-                  const SizedBox(height: 2),
-                  Text(
-                    AppLocalizations.of(context)!.mastercard,
-                    style: TextStyle(
-                      fontSize: 6,
-                      color: AppColors.textSecondary.withValues(alpha: 0.5),
-                    ),
-                  ),
-                ],
+            ],
+          ),
+          Row(
+            children: [
+              SvgPicture.asset(
+                Assets.assetsSvgsChip,
+                width: 36,
+                height: 26,
+                fit: BoxFit.contain,
+              ),
+              const SizedBox(width: 10),
+              SvgPicture.asset(
+                Assets.assetsSvgsContactless,
+                width: 20,
+                height: 20,
               ),
             ],
           ),
